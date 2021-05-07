@@ -28,9 +28,14 @@ jobs:
                  -e CYPRESS_username=${{ env.CYPRESS_username }} \
                  -e CYPRESS_password=${{ env.CYPRESS_password }} \
                  --workdir /e2e \
-                 -v "$GITHUB_WORKSPACE":"/e2e" \
+                 -v "${{ env.GITHUB_WORKSPACE }}":"/e2e" \
                  cypress/included:7.2.0
 
       - name: debug
         run: |
           ls -R
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: trident.js.mp4
+          path: ./cypress/videos/trident.js.mp4

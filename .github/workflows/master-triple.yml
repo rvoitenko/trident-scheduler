@@ -1,4 +1,4 @@
-name: Run combined test(Alkalinity, Calcium, Magnesium)
+name: Manual run combined test(Alk, Ca, Mg)
 
 on:
   workflow_dispatch:

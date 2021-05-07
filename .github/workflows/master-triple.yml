@@ -20,6 +20,14 @@ jobs:
   run-test:
     runs-on: ubuntu-20.04
     steps:
+      - name: Run cypress debug
+        run: |
+          docker run --rm --entrypoint=sh \
+                 -e CYPRESS_username=${{ env.CYPRESS_username }} \
+                 -e CYPRESS_password=${{ env.CYPRESS_password }} \
+                 --workdir /e2e \
+                 -v "$GITHUB_WORKSPACE":"/e2e" \
+                 cypress/included:7.2.0" -c "ls -R /e2e/"
       - name: Run cypress
         run: |
           docker run --rm \

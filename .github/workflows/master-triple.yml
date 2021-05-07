@@ -1,0 +1,33 @@
+name: Run combined test(Alkalinity, Calcium, Magnesium)
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Input1'
+        required: false
+
+#on:
+#  push:
+#    branches:
+#      - master
+
+env:
+  CYPRESS_username: ${{ secrets.USERNAME }}
+  CYPRESS_password: ${{ secrets.PASSWORD }}
+
+jobs:
+  run-test:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Run cypress
+        run: |
+          docker run --rm \
+                 -e CYPRESS_username=${{ env.CYPRESS_username }} \
+                 -e CYPRESS_password=${{ env.CYPRESS_password }} \
+                 --workdir /e2e \
+                 -v "$GITHUB_WORKSPACE":"/e2e" \
+                 cypress/included:7.2.0
+      - name: debug
+        run: |
+          ls -R

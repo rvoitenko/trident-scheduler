@@ -1,0 +1,9 @@
+*.zip
+
+**/node_modules
+.DS_Store
+
+# editor stuff
+.idea
+.vscode
+

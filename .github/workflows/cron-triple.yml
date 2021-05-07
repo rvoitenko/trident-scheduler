@@ -1,16 +1,8 @@
 name: Run combined test(Alkalinity, Calcium, Magnesium)
 
 on:
-  workflow_dispatch:
-    inputs:
-      name:
-        description: 'Input1'
-        required: false
-
-#on:
-#  push:
-#    branches:
-#      - master
+  schedule:
+    - cron: "* 6 * * *"
 
 
 jobs:
@@ -26,5 +18,5 @@ jobs:
                  -e CYPRESS_password=${{ secrets.PASSWORD }} \
                  --workdir /e2e \
                  -v "$GITHUB_WORKSPACE":"/e2e" \
-                 cypress/included:7.2.0 --spec "cypress/integration/trident.js" --config video=false
+                 cypress/included:7.2.0 --spec "cypress/integration/trident-triple.js" --config video=false
 

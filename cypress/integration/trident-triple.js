@@ -10,6 +10,6 @@ describe('Window', () => {
         cy.get('#index-panel .card').submit();
         cy.get('.lead').click();
         cy.get('.dash-tri-config > .af').click();
-        // cy.get('.dash-tri-config-triple').click({ force: true });
+        cy.get('.dash-tri-config-triple').click({ force: true });
     })
 })

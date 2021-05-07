@@ -26,11 +26,7 @@ jobs:
                  -e CYPRESS_password=${{ secrets.PASSWORD }} \
                  --workdir /e2e \
                  -v "$GITHUB_WORKSPACE":"/e2e" \
-                 cypress/included:3.4.1
-
-      - name: debug
-        run: |
-          ls -R
+                 cypress/included:3.8.3
 
       - uses: actions/upload-artifact@v2
         with:

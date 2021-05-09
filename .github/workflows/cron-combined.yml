@@ -8,8 +8,22 @@ on:
 jobs:
   run-combined-test:
     runs-on: ubuntu-20.04
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v2
+
+      - name: Check if secrets exist
+        run: |
+          if [ "${{ secrets.USERNAME }}" == "" ]; then
+            echo "USERNAME secret is not exist or empty"
+            echo "Please verify it in https://github.com/$GITHUB_REPOSITORY/settings/secrets/actions"
+            exit 1
+          fi
+          if [ "${{ secrets.PASSWORD }}" == "" ]; then
+            echo "PASSWORD secret is not exist or empty"
+            echo "Please verify it in https://github.com/$GITHUB_REPOSITORY/settings/secrets/actions"
+            exit 1
+          fi
 
       - name: Run cypress
         run: |

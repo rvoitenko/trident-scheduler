@@ -10,19 +10,20 @@ on:
 jobs:
   run-combined-test:
     runs-on: ubuntu-20.04
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v2
 
       - name: Check if secrets exist
         run: |
-          if [ "${{ secrets.USERNAME2 }}" == "" ]; then
-            echo "username secret is not exist or empty"
-            echo "please verify it in https://github.com/$GITHUB_REPOSITORY/settings/secrets/actions"
+          if [ "${{ secrets.USERNAME }}" == "" ]; then
+            echo "USERNAME secret is not exist or empty"
+            echo "Please verify it in https://github.com/$GITHUB_REPOSITORY/settings/secrets/actions"
             exit 1
           fi
           if [ "${{ secrets.PASSWORD }}" == "" ]; then
-            echo "password secret is not exist or empty"
-            echo "please verify it in https://github.com/$GITHUB_REPOSITORY/settings/secrets/actions"
+            echo "PASSWORD secret is not exist or empty"
+            echo "Please verify it in https://github.com/$GITHUB_REPOSITORY/settings/secrets/actions"
             exit 1
           fi
 

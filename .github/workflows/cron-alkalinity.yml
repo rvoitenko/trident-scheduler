@@ -33,4 +33,3 @@ jobs:
                  --workdir /e2e \
                  -v "$GITHUB_WORKSPACE":"/e2e" \
                  cypress/included:7.2.0 --spec "cypress/integration/trident-alkalinity.js" --config video=false
-

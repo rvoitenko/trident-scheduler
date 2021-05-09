@@ -25,12 +25,12 @@ jobs:
             exit 1
           fi
 
-        - name: Run cypress
-          run: |
-            docker run --rm \
-                   -e CYPRESS_username=${{ secrets.USERNAME }} \
-                   -e CYPRESS_password=${{ secrets.PASSWORD }} \
-                   --workdir /e2e \
-                   -v "$GITHUB_WORKSPACE":"/e2e" \
-                   cypress/included:7.2.0 --spec "cypress/integration/trident-alkalinity.js" --config video=false
+      - name: Run cypress
+        run: |
+          docker run --rm \
+                 -e CYPRESS_username=${{ secrets.USERNAME }} \
+                 -e CYPRESS_password=${{ secrets.PASSWORD }} \
+                 --workdir /e2e \
+                 -v "$GITHUB_WORKSPACE":"/e2e" \
+                 cypress/included:7.2.0 --spec "cypress/integration/trident-alkalinity.js" --config video=false
 

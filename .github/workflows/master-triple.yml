@@ -8,7 +8,7 @@ on:
         required: false
 
 jobs:
-  run-triple-test:
+  run-combined-test:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -17,8 +17,11 @@ jobs:
         run: |
           if [ "${{ secrets.USERNAME2 }}" == "" ]; then
             echo "username secret is not exist or empty"
-            echo "please verify it in https://github.com/${{ env.GITHUB_REPOSITORY }}/settings/secrets/actions"
+            echo "please verify it in https://github.com/$GITHUB_REPOSITORY/settings/secrets/actions"
+            date
+            exit
           fi
+
 
       - name: Run cypress
         run: |

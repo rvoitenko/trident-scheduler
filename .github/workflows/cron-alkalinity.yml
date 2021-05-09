@@ -2,7 +2,7 @@ name: Cron - run alkalinity test
 
 on:
   schedule:
-    - cron: "55 18 * * *"
+    - cron: "0 16 * * *"
 
 
 jobs:

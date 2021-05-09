@@ -13,6 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Check if secrets exist
+        run: |
+          if [ "${{ secrets.USERNAME2 }}" == "" ]; then
+            echo "username secret is not exist or empty"
+            echo "please verify it in https://github.com/${{ env.GITHUB_REPOSITORY }}/settings/secrets/actions"
+          fi
+
       - name: Run cypress
         run: |
           docker run --rm \

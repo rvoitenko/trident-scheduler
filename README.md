@@ -31,14 +31,21 @@ There are two separate workflow files which are responsible for combined and alk
 
 Fork the repo by clicking `Fork` button in upper right corner.
 Go to newly forked repo settings -> `Secrets`. Add two secrets - `USERNAME` with your Apex fusion username and `PASSWORD` with your Apex fusion password.
-By default Combined test is running at 6AM UTC time once per day and additional Alkalinity test runs at 4PM UTC time.
+By default the following schedule is activated(UTC time):
+
+| UTC Time  | Test                             |
+| --------- | -------------------------------- |
+| 06:00     |	Alkalinity, Calcium, Magnesium |
+| 16:00     |	Alkalinity                     |
+
 If you want to customize these schedule edit the following files: 
 - [cron-alkalinity.yml](.github/workflows/cron-alkalinity.yml)
 - [cron-combined.yml](.github/workflows/cron-combined.yml)  
 
-and push changes to the repo.
+and push changes to the repo. Don't forget to convert your local time to UTC and [this](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#scheduled-events) documentation can be used to define time.
   
 If you don't want to run separate Alkalinity test you can remove the file [cron-alkalinity.yml](.github/workflows/cron-alkalinity.yml).
+To verify if it works go to the `Actions` tab day after. If everything went fine successful runs will be marked as green check mark there.
 
 All this automation is on your own risk.
 

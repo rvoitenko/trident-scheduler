@@ -1,8 +1,16 @@
 name: Cron - run alkalinity test
 
+
 on:
-  schedule:
-    - cron: "0 16 * * *"
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Input1'
+        required: false
+# temporary disable
+#on:
+#  schedule:
+#    - cron: "0 16 * * *"
 
 
 jobs:

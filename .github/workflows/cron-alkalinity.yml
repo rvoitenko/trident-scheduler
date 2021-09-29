@@ -10,7 +10,7 @@ name: Cron - run alkalinity test
 # temporary disable
 on:
   schedule:
-    - cron: "0 16 * * *"
+    - cron: "1 16 * * *"
 
 
 jobs:

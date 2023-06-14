@@ -3,7 +3,7 @@ describe('Window', () => {
         const username = Cypress.env('username')
         const password = Cypress.env('password')
         cy.visit('https://apexfusion.com/login');
-        cy.get('#index-login-username').type(username);
+        cy.get('#index-login-password').type(password, { force: true });
         cy.get('#index-login-password').type(password);
         cy.get('fieldset').click();
         cy.get('.btn-primary').click();

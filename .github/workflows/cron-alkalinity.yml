@@ -18,13 +18,7 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 30
     steps:
-      - name: Collect Workflow Telemetry
-        uses: runforesight/foresight-workflow-kit-action@v1
-        if: ${{ always() }}
-        with:
-          api_key: ${{ secrets.FORESIGHT_API_KEY }}
-          
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Check if secrets exist
         run: |
@@ -46,6 +40,6 @@ jobs:
                  -e CYPRESS_password=${{ secrets.PASSWORD }} \
                  --workdir /e2e \
                  -v "$GITHUB_WORKSPACE":"/e2e" \
-                 cypress/included:7.2.0 --spec "cypress/integration/trident-alkalinity.js" --config video=false
+                 cypress/included:7.3.0 --spec "cypress/integration/trident-alkalinity.js" --config video=false
 
       - uses: gautamkrishnar/keepalive-workflow@v1

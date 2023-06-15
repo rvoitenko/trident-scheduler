@@ -9,7 +9,10 @@ describe('Window', () => {
         cy.get('.btn-primary').click({ force: true });
         cy.get('#index-panel .card').submit();
         cy.get('.lead').click({ force: true }); // Forcing the click action
-        cy.get('.dash-tri-config > .af').click();
+        cy.wait(1000); // wait for 1000 milliseconds, adjust as needed
+        cy.get('.dash-tri-config > .af').click({ force: true });
         cy.get('.dash-tri-config-single').click({ force: true });
     })
 })
+
+

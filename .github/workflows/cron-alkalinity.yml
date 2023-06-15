@@ -1,15 +1,15 @@
 name: Cron - run alkalinity test
 
 
-on:
-  workflow_dispatch:
-    inputs:
-      name:
-        description: 'Input1'
-        required: false
 #on:
-#  schedule:
-#    - cron: "1 16 * * *"
+#  workflow_dispatch:
+#    inputs:
+#      name:
+#        description: 'Input1'
+#        required: false
+on:
+  schedule:
+    - cron: "1 16 * * *"
 
 
 jobs:
@@ -39,6 +39,6 @@ jobs:
                  -e CYPRESS_password=${{ secrets.PASSWORD }} \
                  --workdir /e2e \
                  -v "$GITHUB_WORKSPACE":"/e2e" \
-                 cypress/included:7.3.0 --spec "cypress/integration/trident-alkalinity.js" --config video=false
+                 cypress/included:12.4.0 --spec "cypress/integration/trident-alkalinity.js" --config video=false
 
       - uses: gautamkrishnar/keepalive-workflow@v1

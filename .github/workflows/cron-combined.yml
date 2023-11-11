@@ -2,7 +2,7 @@ name: Cron - run combined test(Alk, Ca, Mg)
 
 on:
   schedule:
-    - cron: "2 6 * * *"
+    - cron: "2 7 * * *"
 
 
 jobs:
@@ -32,6 +32,6 @@ jobs:
                  -e CYPRESS_password=${{ secrets.PASSWORD }} \
                  --workdir /e2e \
                  -v "$GITHUB_WORKSPACE":"/e2e" \
-                 cypress/included:12.4.0 --spec "cypress/integration/trident-combined.js" --config video=false
+                 cypress/included:12.4.1 --spec "cypress/integration/trident-combined.js" --config video=false
 
       - uses: gautamkrishnar/keepalive-workflow@v1

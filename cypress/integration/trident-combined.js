@@ -11,6 +11,6 @@ describe('Window', () => {
         cy.get('.lead').click({ force: true }); // Forcing the click action
         cy.wait(1000); // wait for 1000 milliseconds, adjust as needed
         cy.get('.dash-tri-config > .af').click({ force: true });
-        cy.get('.dash-tri-config-triple').click({ force: true });
+        cy.get('.dash-tri-config-test-0').click({ force: true });
     })
 })

@@ -9,7 +9,7 @@ name: Cron - run alkalinity test
 #        required: false
 on:
   schedule:
-    - cron: "1 17 * * *"
+    - cron: "1 16 * * *"
 
 
 jobs:

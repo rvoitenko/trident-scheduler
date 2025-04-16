@@ -9,7 +9,11 @@ name: Cron - run alkalinity test
 #        required: false
 on:
   schedule:
-    - cron: "1 17 * * *"
+    # winter time
+    - cron: "1 17 * 11-12,1-3 *"
+    # summer time
+    - cron: "1 16 * 4-10 *"
+    
 
 
 jobs:

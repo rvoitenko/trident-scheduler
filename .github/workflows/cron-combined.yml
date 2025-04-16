@@ -2,7 +2,11 @@ name: Cron - run combined test(Alk, Ca, Mg)
 
 on:
   schedule:
-    - cron: "2 7 * * *"
+    # winter time
+    - cron: "2 7 * 11-12,1-3 *"
+    # summer time
+    - cron: "2 6 * 4-10 *"
+    
 
 
 jobs:

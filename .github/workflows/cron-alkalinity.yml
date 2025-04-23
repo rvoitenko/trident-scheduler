@@ -45,4 +45,4 @@ jobs:
                  -v "$GITHUB_WORKSPACE":"/e2e" \
                  cypress/included:12.4.1 --spec "cypress/integration/trident-alkalinity.js" --config video=false
 
-      - uses: gautamkrishnar/keepalive-workflow@v1
+

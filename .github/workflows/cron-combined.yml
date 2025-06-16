@@ -39,3 +39,4 @@ jobs:
                  cypress/included:12.4.1 --spec "cypress/integration/trident-combined.js" --config video=false
 
 
+      - uses: entepotenz/keep-github-actions-alive-min-dependencies@v1

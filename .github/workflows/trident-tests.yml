@@ -1,0 +1,108 @@
+name: Trident Tests - Automated Aquarium Testing
+
+on:
+  schedule:
+    # Combined test - winter time (7:02 AM local)
+    - cron: "2 7 * 11-12,1-3 *"
+    # Combined test - summer time (6:02 AM local)
+    - cron: "2 6 * 4-10 *"
+    # Alkalinity test - winter time (5:01 PM local)
+    - cron: "1 17 * 11-12,1-3 *"
+    # Alkalinity test - summer time (4:01 PM local)
+    - cron: "1 16 * 4-10 *"
+  workflow_dispatch:
+    inputs:
+      test_type:
+        description: 'Test type to run (combined, alkalinity, or both)'
+        required: true
+        type: choice
+        default: 'both'
+        options:
+          - both
+          - combined
+          - alkalinity
+
+jobs:
+  run-combined-test:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    # Run if manually triggered with 'combined' or 'both', or on combined test schedule
+    if: |
+      (github.event_name == 'workflow_dispatch' && (github.event.inputs.test_type == 'combined' || github.event.inputs.test_type == 'both')) ||
+      (github.event_name == 'schedule' && (github.event.schedule == '2 7 * 11-12,1-3 *' || github.event.schedule == '2 6 * 4-10 *'))
+
+    name: Combined Test (Alk, Ca, Mg)
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate secrets
+        run: |
+          if [ "${{ secrets.USERNAME }}" == "" ]; then
+            echo "❌ USERNAME secret is not set or empty"
+            echo "Please configure it at: https://github.com/$GITHUB_REPOSITORY/settings/secrets/actions"
+            exit 1
+          fi
+          if [ "${{ secrets.PASSWORD }}" == "" ]; then
+            echo "❌ PASSWORD secret is not set or empty"
+            echo "Please configure it at: https://github.com/$GITHUB_REPOSITORY/settings/secrets/actions"
+            exit 1
+          fi
+          echo "✅ All required secrets are configured"
+
+      - name: Run Cypress - Combined Test
+        run: |
+          echo "🧪 Running Combined Trident test (Alkalinity, Calcium, Magnesium)..."
+          docker run --rm \
+                 -e CYPRESS_username=${{ secrets.USERNAME }} \
+                 -e CYPRESS_password=${{ secrets.PASSWORD }} \
+                 --workdir /e2e \
+                 -v "$GITHUB_WORKSPACE":"/e2e" \
+                 cypress/included:13.6.6 --spec "cypress/integration/trident-combined.js" --config video=false
+          echo "✅ Combined test completed successfully"
+
+      - name: Keep workflow alive
+        uses: entepotenz/keep-github-actions-alive-min-dependencies@v1
+
+  run-alkalinity-test:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    # Run if manually triggered with 'alkalinity' or 'both', or on alkalinity test schedule
+    if: |
+      (github.event_name == 'workflow_dispatch' && (github.event.inputs.test_type == 'alkalinity' || github.event.inputs.test_type == 'both')) ||
+      (github.event_name == 'schedule' && (github.event.schedule == '1 17 * 11-12,1-3 *' || github.event.schedule == '1 16 * 4-10 *'))
+
+    name: Alkalinity Test
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate secrets
+        run: |
+          if [ "${{ secrets.USERNAME }}" == "" ]; then
+            echo "❌ USERNAME secret is not set or empty"
+            echo "Please configure it at: https://github.com/$GITHUB_REPOSITORY/settings/secrets/actions"
+            exit 1
+          fi
+          if [ "${{ secrets.PASSWORD }}" == "" ]; then
+            echo "❌ PASSWORD secret is not set or empty"
+            echo "Please configure it at: https://github.com/$GITHUB_REPOSITORY/settings/secrets/actions"
+            exit 1
+          fi
+          echo "✅ All required secrets are configured"
+
+      - name: Run Cypress - Alkalinity Test
+        run: |
+          echo "🧪 Running Alkalinity Trident test..."
+          docker run --rm \
+                 -e CYPRESS_username=${{ secrets.USERNAME }} \
+                 -e CYPRESS_password=${{ secrets.PASSWORD }} \
+                 --workdir /e2e \
+                 -v "$GITHUB_WORKSPACE":"/e2e" \
+                 cypress/included:13.6.6 --spec "cypress/integration/trident-alkalinity.js" --config video=false
+          echo "✅ Alkalinity test completed successfully"
+
+      - name: Keep workflow alive
+        uses: entepotenz/keep-github-actions-alive-min-dependencies@v1

@@ -18,34 +18,46 @@ If you need more frequent tests you can tune tests schedule to any desired time 
 
 ### How it works
 
-The setup is based on automation written in cypress which basically emulates login into your Apex fusion, and click Trident buttons `Start Test`->`Combined/Alkalinity`. 
-Automatic run is performed by GitHub Actions as [cron schedule](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#scheduled-events).
-Free GitHub account is enough to run this automation.
-Apex fusion username and password stored securely as GitHub Secrets.
-Schedule time is defined in UTC time. But real test run can delay 5-30 minutes. It's because how GitHub cron schedule works for free accounts. 
-There are two separate workflow files which are responsible for combined and alkalinity tests schedule:
- - [cron-alkalinity.yml](.github/workflows/cron-alkalinity.yml)
- - [cron-combined.yml](.github/workflows/cron-combined.yml)
+The setup is based on automation written in Cypress (v13.6.6) which emulates login into your Apex Fusion and clicks Trident buttons `Start Test`->`Combined/Alkalinity`.
+Automatic runs are performed by GitHub Actions as [cron schedule](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#scheduled-events).
+A free GitHub account is enough to run this automation.
+Apex Fusion username and password are stored securely as GitHub Secrets.
+Schedule time is defined in UTC time, but actual test runs may delay 5-30 minutes due to how GitHub cron schedules work for free accounts.
+
+All tests are managed by a single workflow file: [trident-tests.yml](.github/workflows/trident-tests.yml)
+
+**Features:**
+- Automatic retries on test failure (2 retries)
+- Login validation and error handling
+- Screenshots on failure for troubleshooting
+- Manual trigger option via workflow_dispatch
 
 ### How to setup
 
-Fork the repo by clicking `Fork` button in upper right corner.
-Go to newly forked repo settings -> `Secrets`. Add two secrets - `USERNAME` with your Apex fusion username and `PASSWORD` with your Apex fusion password.
-By default the following schedule is activated(UTC time):
+1. Fork the repo by clicking the `Fork` button in the upper right corner
+2. Go to your forked repo: `Settings` → `Secrets and variables` → `Actions`
+3. Add two repository secrets:
+   - `USERNAME`: Your Apex Fusion username
+   - `PASSWORD`: Your Apex Fusion password
+
+**Default Schedule (UTC time):**
 
 | UTC Time  | Test                             |
 | --------- | -------------------------------- |
-| 06:00     |	Alkalinity, Calcium, Magnesium |
-| 16:00     |	Alkalinity                     |
+| 06:00     | Alkalinity, Calcium, Magnesium   |
+| 16:00     | Alkalinity only                  |
 
-If you want to customize these schedule edit the following files: 
-- [cron-alkalinity.yml](.github/workflows/cron-alkalinity.yml)
-- [cron-combined.yml](.github/workflows/cron-combined.yml)  
+**To customize the schedule:**
+- Edit [trident-tests.yml](.github/workflows/trident-tests.yml)
+- Modify the cron expressions under the `schedule` section
+- Convert your local time to UTC using [this documentation](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#scheduled-events)
 
-and push changes to the repo. Don't forget to convert your local time to UTC and [this](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#scheduled-events) documentation can be used to define time.
-  
-If you don't want to run separate Alkalinity test you can remove the file [cron-alkalinity.yml](.github/workflows/cron-alkalinity.yml).
-To verify if it works go to the `Actions` tab day after. If everything went fine successful runs will be marked as green check mark there.
+**Manual Testing:**
+- Go to `Actions` tab → `Trident Tests` → `Run workflow`
+- Select test type: `combined`, `alkalinity`, or `both`
+
+**Verify Setup:**
+Check the `Actions` tab after a scheduled run. Successful runs show a green checkmark. If tests fail, check the logs and screenshots (if available).
 
 All this automation is on your own risk.
 

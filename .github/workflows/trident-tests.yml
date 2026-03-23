@@ -2,14 +2,12 @@ name: Trident Tests - Automated Aquarium Testing
 
 on:
   schedule:
-    # Combined test - winter time (7:02 AM local)
-    - cron: "2 7 * 11-12,1-3 *"
-    # Combined test - summer time (6:02 AM local)
-    - cron: "2 6 * 4-10 *"
-    # Alkalinity test - winter time (5:01 PM local)
-    - cron: "1 17 * 11-12,1-3 *"
-    # Alkalinity test - summer time (4:01 PM local)
-    - cron: "1 16 * 4-10 *"
+    # Combined test (Alk, Ca, Mg) - 8:02 AM Stockholm time
+    - cron: "2 8 * * *"
+      timezone: "Europe/Stockholm"
+    # Alkalinity test - 6:01 PM Stockholm time
+    - cron: "1 18 * * *"
+      timezone: "Europe/Stockholm"
   workflow_dispatch:
     inputs:
       test_type:
@@ -29,7 +27,7 @@ jobs:
     # Run if manually triggered with 'combined' or 'both', or on combined test schedule
     if: |
       (github.event_name == 'workflow_dispatch' && (github.event.inputs.test_type == 'combined' || github.event.inputs.test_type == 'both')) ||
-      (github.event_name == 'schedule' && (github.event.schedule == '2 7 * 11-12,1-3 *' || github.event.schedule == '2 6 * 4-10 *'))
+      (github.event_name == 'schedule' && github.event.schedule == '2 8 * * *')
 
     name: Combined Test (Alk, Ca, Mg)
 
@@ -71,7 +69,7 @@ jobs:
     # Run if manually triggered with 'alkalinity' or 'both', or on alkalinity test schedule
     if: |
       (github.event_name == 'workflow_dispatch' && (github.event.inputs.test_type == 'alkalinity' || github.event.inputs.test_type == 'both')) ||
-      (github.event_name == 'schedule' && (github.event.schedule == '1 17 * 11-12,1-3 *' || github.event.schedule == '1 16 * 4-10 *'))
+      (github.event_name == 'schedule' && github.event.schedule == '1 18 * * *')
 
     name: Alkalinity Test
 

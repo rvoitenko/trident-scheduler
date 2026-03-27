@@ -49,8 +49,8 @@ describe('Apex Fusion - Trident Alkalinity Test', () => {
             .should('be.visible')
             .click();
 
-        // Start the alkalinity test (test-1 = alkalinity only)
-        cy.get('.dash-tri-config-test-1')
+        // Start the alkalinity test (dropdown item labeled "Alkalinity")
+        cy.contains('.dash-tri-config .dropdown-item', 'Alkalinity')
             .should('be.visible')
             .click()
             .then(() => {

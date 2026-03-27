@@ -11,12 +11,11 @@ on:
   workflow_dispatch:
     inputs:
       test_type:
-        description: 'Test type to run (combined, alkalinity, or both)'
+        description: 'Test type to run (combined includes Alk+Ca+Mg)'
         required: true
         type: choice
-        default: 'both'
+        default: 'combined'
         options:
-          - both
           - combined
           - alkalinity
 
@@ -24,9 +23,9 @@ jobs:
   run-combined-test:
     runs-on: ubuntu-22.04
     timeout-minutes: 30
-    # Run if manually triggered with 'combined' or 'both', or on combined test schedule
+    # Run if manually triggered with 'combined', or on combined test schedule
     if: |
-      (github.event_name == 'workflow_dispatch' && (github.event.inputs.test_type == 'combined' || github.event.inputs.test_type == 'both')) ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.test_type == 'combined') ||
       (github.event_name == 'schedule' && github.event.schedule == '2 8 * * *')
 
     name: Combined Test (Alk, Ca, Mg)
@@ -66,9 +65,9 @@ jobs:
   run-alkalinity-test:
     runs-on: ubuntu-22.04
     timeout-minutes: 30
-    # Run if manually triggered with 'alkalinity' or 'both', or on alkalinity test schedule
+    # Run if manually triggered with 'alkalinity', or on alkalinity test schedule
     if: |
-      (github.event_name == 'workflow_dispatch' && (github.event.inputs.test_type == 'alkalinity' || github.event.inputs.test_type == 'both')) ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.test_type == 'alkalinity') ||
       (github.event_name == 'schedule' && github.event.schedule == '1 18 * * *')
 
     name: Alkalinity Test

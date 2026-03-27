@@ -49,8 +49,8 @@ describe('Apex Fusion - Trident Combined Test', () => {
             .should('be.visible')
             .click();
 
-        // Start the combined test (test-0 = combined: Alk, Ca, Mg)
-        cy.get('.dash-tri-config-test-0')
+        // Start the combined test (dropdown item labeled "Combined")
+        cy.contains('.dash-tri-config .dropdown-item', 'Combined')
             .should('be.visible')
             .click()
             .then(() => {

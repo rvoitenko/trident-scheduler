@@ -44,16 +44,15 @@ describe('Apex Fusion - Trident Combined Test', () => {
             .should('be.visible')
             .click();
 
-        // Wait for Trident config to be visible and open the dropdown
-        cy.get('.dash-tri-config > .af', { timeout: 10000 })
+        // Click the Trident config gear button to open dropdown
+        cy.get('button.dash-tri-config', { timeout: 10000 })
             .should('be.visible')
             .click();
 
-        // Wait for dropdown menu to open, then click Combined
-        cy.get('.dash-tri-config .dropdown-menu', { timeout: 8000 })
-            .should('be.visible');
-
-        cy.contains('.dash-tri-config .dropdown-item', 'Combined')
+        // Wait for sibling dropdown menu to open, then click Combined
+        cy.get('.dash-tri-config + .dropdown-menu', { timeout: 8000 })
+            .should('be.visible')
+            .contains('.dropdown-item', 'Combined')
             .click({ force: true })
             .then(() => {
                 cy.log('✅ Combined test initiated successfully');

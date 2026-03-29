@@ -44,16 +44,15 @@ describe('Apex Fusion - Trident Alkalinity Test', () => {
             .should('be.visible')
             .click();
 
-        // Wait for Trident config to be visible and open the dropdown
-        cy.get('.dash-tri-config > .af', { timeout: 10000 })
+        // Click the Trident config gear button to open dropdown
+        cy.get('button.dash-tri-config', { timeout: 10000 })
             .should('be.visible')
             .click();
 
-        // Wait for dropdown menu to open, then click Alkalinity
-        cy.get('.dash-tri-config .dropdown-menu', { timeout: 8000 })
-            .should('be.visible');
-
-        cy.contains('.dash-tri-config .dropdown-item', 'Alkalinity')
+        // Wait for sibling dropdown menu to open, then click Alkalinity
+        cy.get('.dash-tri-config + .dropdown-menu', { timeout: 8000 })
+            .should('be.visible')
+            .contains('.dropdown-item', 'Alkalinity')
             .click({ force: true })
             .then(() => {
                 cy.log('✅ Alkalinity test initiated successfully');
